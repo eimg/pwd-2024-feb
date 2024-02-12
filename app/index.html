@@ -56,7 +56,7 @@
         function createItem(item) {
             const li = document.createElement("li");
             li.classList.add("list-group-item");
-            li.textContent = item.name;
+            li.innerHTML = `<span>${item.name}</span>`;
 
             const del = document.createElement("a");
             del.setAttribute("href", "#");
@@ -72,6 +72,28 @@
                 li.remove();
             }
             li.appendChild(del);
+
+            const edit = document.createElement("a");
+            edit.setAttribute("href", "#");
+            edit.classList.add("fa-solid", "fa-edit", "me-2", "float-end");
+            edit.onclick = () => {
+                const currentName = li.querySelector("span").textContent;
+                const updateName = prompt('Enter name', currentName);
+
+                if(updateName) {
+                    fetch(`${api}/${item.id}`, {
+                        method: 'PUT',
+                        body: JSON.stringify({ name: updateName }),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`,
+                        }
+                    });
+
+                    li.querySelector("span").textContent = updateName;
+                }
+            }
+            li.appendChild(edit);
 
             document.querySelector("#list").appendChild(li);
         }

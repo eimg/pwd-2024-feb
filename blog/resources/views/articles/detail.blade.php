@@ -12,10 +12,13 @@
             <div class="card-body">
                 <h3 class="h3 card-title">{{ $article->title }}</h3>
                 <div>
-                    <b class="text-success">{{ $article->user->name }}</b>,
+                    <b class="text-success">
+                        {{ $article->user->name }}
+                    </b>,
 
                     <small class="text-muted">
-                        <b>Category:</b> {{ $article->category->name }},
+                        <b>Category:</b> 
+                        {{ $article->category->name ?? "Unknown" }},
                         {{ $article->created_at->diffForHumans() }}
                     </small>
                 </div>
